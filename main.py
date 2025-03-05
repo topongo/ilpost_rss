@@ -162,6 +162,8 @@ class IlPostApi:
             params=params,
             headers=self.auth_headers()
         )
+        if resp.status_code == 404:
+            raise PodcastExcpetion("podcast not found", 404)
         if resp.status_code != 200:
             raise Exception(f"error while requesting podcast: {resp.status_code}: {resp.text}")
 
@@ -303,7 +305,13 @@ def rss(podcast):
         modified_since = datetime.fromisoformat(request.headers.get("if-modified-since"))
     except Exception as _:
         modified_since = None
-    feed, modified = feed_gen(api, db, podcast, modified_since)
+    try:
+        feed, modified = feed_gen(api, db, podcast, modified_since)
+    except PodcastExcpetion as e:
+        message = e.args[0]
+        code = e.args[1]
+        return message, code
+
     if feed is None:
         return "", 304
     response = make_response(feed)
@@ -311,4 +319,5 @@ def rss(podcast):
     response.headers.set('Last-Modified', modified.isoformat())
     return response
 
-
+class PodcastExcpetion(Exception):
+    pass
