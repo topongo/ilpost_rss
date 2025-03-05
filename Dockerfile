@@ -2,7 +2,7 @@ FROM python:alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache py3-pip tini
+RUN apk add --no-cache py3-pip tini git
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
