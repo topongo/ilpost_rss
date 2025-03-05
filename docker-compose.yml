@@ -1,0 +1,23 @@
+services:
+  db:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ilpost
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:?}
+    volumes:
+      - mongodb_data:/data/db
+  app:
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      MONGO_USERNAME: ${MONGO_USERNAME:-ilpost}
+      MONGO_PASSWORD: ${MONGO_PASSWORD:?}
+      MONGO_HOST: db
+      ILPOST_USERNAME: ${ILPOST_USERNAME:?}
+      ILPOST_PASSWORD: ${ILPOST_PASSWORD:?}
+
+volumes:
+  mongodb_data:

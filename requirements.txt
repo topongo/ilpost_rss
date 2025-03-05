@@ -1,0 +1,6 @@
+pymongo
+flask
+requests
+feedgen
+python-dotenv
+gunicorn
