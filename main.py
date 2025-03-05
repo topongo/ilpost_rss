@@ -254,7 +254,7 @@ def feed_gen(api, db, podcast, modified_since=None):
         fe = fg.add_entry()
         e.populate_entry(fe)
 
-    return fg.rss_str(), updated
+    return fg.rss_str(), modified
 
 ILPOST_USERNAME = getenv("ILPOST_USERNAME")
 ILPOST_PASSWORD = getenv("ILPOST_PASSWORD", "")
