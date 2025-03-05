@@ -1,6 +1,6 @@
 pymongo
 flask
 requests
-feedgen
+git+https://github.com/topongo/python-feedgen/
 python-dotenv
 gunicorn
