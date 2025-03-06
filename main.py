@@ -150,6 +150,8 @@ class IlPostApi:
         for i in data:
             yield Episode(i, podcast)
             counter += 1
+        if hits is not None and counter >= hits:
+            return
         if head["total"] > counter:
             for i in self.recursive_podcast_get(podcast, page=page+1, counter=counter):
                 yield i
